@@ -7,8 +7,11 @@ from firebase_admin import credentials, firestore
 import toml
 
 # Load Firebase credentials from Streamlit secrets
-firebase_credentials = st.secrets["firebase_credentials"]
-toml_data = toml.load(firebase_credentials)
+toml_file_path = ".streamlit/secrets.toml"
+toml_data = toml.load(toml_file_path)
+firebase_credentials = toml_data['firebase_credentials']
+# firebase_credentials = st.secrets["firebase_credentials"]
+# toml_data = toml.load(firebase_credentials)
 
 # Convert the secret string to a dictionary
 # cred_dict = json.loads(firebase_credentials)
@@ -17,7 +20,7 @@ import base64
 
 # Firebase setup
 if not firebase_admin._apps:
-    cred = credentials.Certificate(toml_data)
+    cred = credentials.Certificate(firebase_credentials)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
