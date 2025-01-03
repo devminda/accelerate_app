@@ -5,6 +5,7 @@ import pandas as pd
 import firebase_admin
 from firebase_admin import credentials, firestore
 import toml
+import os
 
 # Load Firebase credentials from Streamlit secrets
 toml_file_path = ".streamlit/secrets.toml"
@@ -82,7 +83,7 @@ else:
     st.sidebar.warning("Incorrect password. You cannot update the question.")
 
 # Background image URL (change to an actual URL or a file path)
-with open(r'C:\Users\Devminda\OneDrive\Documents\Projects\Global shapers\Projects\Finance project\app\pexels-jessbaileydesign-743986.jpg', "rb") as image_file:
+with open(os.path.join(os.getcwd(),'image.jpg'), "rb") as image_file:
     background_image_url = base64.b64encode(image_file.read()).decode()
 
 # CSS to set the background image
