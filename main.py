@@ -4,10 +4,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import firebase_admin
 from firebase_admin import credentials, firestore
-import json
+import toml
 
 # Load Firebase credentials from Streamlit secrets
 firebase_credentials = st.secrets["firebase_credentials"]
+toml_data = toml.load(firebase_credentials)
 
 # Convert the secret string to a dictionary
 # cred_dict = json.loads(firebase_credentials)
@@ -16,7 +17,7 @@ import base64
 
 # Firebase setup
 if not firebase_admin._apps:
-    cred = credentials.Certificate(firebase_credentials)
+    cred = credentials.Certificate(toml_data)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
