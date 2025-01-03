@@ -6,6 +6,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import toml
 import os
+import base64
 
 # Load Firebase credentials from Streamlit secrets
 toml_file_path = ".streamlit/secrets.toml"
