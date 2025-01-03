@@ -17,8 +17,6 @@ firebase_credentials = toml_data['firebase_credentials']
 # Convert the secret string to a dictionary
 # cred_dict = json.loads(firebase_credentials)
 
-import base64
-
 # Firebase setup
 if not firebase_admin._apps:
     cred = credentials.Certificate(firebase_credentials)
@@ -120,6 +118,9 @@ if st.button("Submit"):
         preprocessed_input = preprocess_response(user_input.strip())
         responses_collection.add({"response": preprocessed_input})
         st.success("Your answer has been added!")
+        
+        # Immediately update session state with the new responses
+        update_data()  # Fetch updated responses from Firestore
     else:
         st.warning("Please enter a valid answer.")
 
