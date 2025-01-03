@@ -10,13 +10,13 @@ import json
 firebase_credentials = st.secrets["firebase_credentials"]
 
 # Convert the secret string to a dictionary
-cred_dict = json.loads(firebase_credentials)
+# cred_dict = json.loads(firebase_credentials)
 
 import base64
 
 # Firebase setup
 if not firebase_admin._apps:
-    cred = credentials.Certificate(cred_dict)
+    cred = credentials.Certificate(firebase_credentials)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
