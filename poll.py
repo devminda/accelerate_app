@@ -8,7 +8,7 @@ from firebase_functions import responses_collection_poll, poll_doc
 
 
 def poll_page():
-    st.subheader("Poll Page")    
+    st.title("Polling station")   
     
     st.session_state["poll_question"], st.session_state["poll_answers"] = fetch_quiz_data(poll_doc)
 

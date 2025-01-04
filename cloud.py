@@ -10,7 +10,7 @@ from firebase_functions import responses_collection_cloud, question_doc
 
 
 def word_cloud_page():
-    st.subheader("Word Cloud Page")
+    st.title("Cloud of Thoughts")
     update_data(responses_collection_cloud, question_doc)  # Fetch the latest responses and question
     question = st.session_state["current_question"]
     print(st.session_state['responses'])
