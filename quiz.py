@@ -1,36 +1,38 @@
-# Quiz Page - Display quiz and dynamic bar graph
 import streamlit as st
-import matplotlib.pyplot as plt
-
-from functions import set_background_image, fetch_responses, fetch_quiz_data
-from firebase_functions import responses_collection, quiz_doc
+from functions import fetch_quiz_data
+from firebase_functions import quiz_doc
 
 
 def quiz_page():
-    st.subheader("Quiz Page")
+    st.title("Multi-Question Quiz")
     
-    fetch_quiz_data(quiz_doc)
-    
-    quiz_question = st.session_state["quiz_question"]
-    choices = st.session_state["quiz_answers"]
+    user_answers = {}
+    quiz_data = quiz_doc.get()
+    if quiz_data.exists:
+        print("this is it", quiz_data.to_dict())
+        quiz = quiz_data.to_dict()
+        if len(quiz)>0:
+            for key, val in quiz.items():
+                st.session_state["quiz_data"][key] = val
+    # print(st.session_state["quiz_data"])
 
-    # Allow user to choose an answer
-    user_answer = st.radio(quiz_question, choices)
+    for i, quiz in st.session_state["quiz_data"].items():
+        # print(quiz)
+        st.subheader(f"{i}")
+        st.write(quiz["question"])
+        user_answers[i] = (
+            st.radio(f"Your Answer for {i}", quiz["options"], key=f"{i}")
+        )
 
-    if st.button("Submit Quiz Answer"):
-        if user_answer:
-            responses_collection.add({"response": user_answer})
-            st.success(f"Your answer '{user_answer}' has been recorded!")
-
-    # Display dynamic bar graph for quiz responses
-    responses = fetch_responses(responses_collection)
-    answers_count = {choice: responses.count(choice) for choice in choices}
-
-    fig, ax = plt.subplots()
-    ax.bar(answers_count.keys(), answers_count.values(), color=['red', 'blue', 'green', 'yellow'])
-    ax.set_xlabel("Answers")
-    ax.set_ylabel("Count")
-    ax.set_title("Quiz Answer Distribution")
-    st.pyplot(fig)
+    if st.button("Submit Answers"):
+        st.subheader("Results")
+        for i, quiz in st.session_state["quiz_data"].items():
+            
+            if user_answers[i] == quiz["correct_answer"]:
+                st.success(f"{i}: Correct! 🎉")
+            else:
+                st.error(
+                    f"{i}: Wrong! The correct answer is {quiz['correct_answer']}."
+                )
 
 quiz_page()

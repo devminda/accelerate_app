@@ -42,8 +42,8 @@ def fetch_current_question(question_doc):
     return "No question set."
 
 # Function to fetch the quiz question and answers
-def fetch_quiz_data(quiz_doc):
-    quiz_data = quiz_doc.get()
+def fetch_quiz_data(poll_doc):
+    quiz_data = poll_doc.get()
     if quiz_data.exists:
         quiz = quiz_data.to_dict()
         return quiz.get("question", "What is your favorite color?"), quiz.get("answers", ["Red", "Blue", "Green", "Yellow"])

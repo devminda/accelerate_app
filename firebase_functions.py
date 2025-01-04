@@ -18,5 +18,7 @@ if not firebase_admin._apps:
 db = firestore.client()
 question_doc = db.collection("app_data").document("current_question")
 quiz_doc = db.collection("app_data").document("quiz_data")
-responses_collection = db.collection("responses")
+poll_doc = db.collection("app_data").document("poll_data")
+responses_collection_cloud = db.collection("responses_cloud")
+responses_collection_poll = db.collection("responses_poll")
 
