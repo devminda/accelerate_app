@@ -41,6 +41,6 @@ def word_cloud_page():
 
 
 # # Set the background image
-image_path = os.path.join("images", "cloudhd.jpg")  # Specify the path to your image
+image_path = os.path.join("images", "cloudhd.jpeg")  # Specify the path to your image
 set_background_image(image_path)
 word_cloud_page()
