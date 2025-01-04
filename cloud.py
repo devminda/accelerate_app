@@ -30,7 +30,7 @@ def word_cloud_page():
     if st.session_state["responses"]:
         st.subheader("Dynamic Word Cloud")
         text = " ".join(st.session_state["responses"])
-        wordcloud = WordCloud(width=800, height=400, background_color="white").generate(text)
+        wordcloud = WordCloud(width=800, height=400, background_color="white", include_numbers=True).generate(text)
         fig, ax = plt.subplots()
         ax.imshow(wordcloud, interpolation="bilinear")
         ax.axis("off")
