@@ -13,6 +13,7 @@ def word_cloud_page():
     st.subheader("Word Cloud Page")
     update_data(responses_collection_cloud, question_doc)  # Fetch the latest responses and question
     question = st.session_state["current_question"]
+    print(st.session_state['responses'])
     st.markdown(f'<h1 style="font-size: 40px; text-align: center; color: #f1c40f;">{question}</h1>', unsafe_allow_html=True)
 
     # User Input Section
@@ -28,8 +29,10 @@ def word_cloud_page():
 
     # Generate Word Cloud
     if st.session_state["responses"]:
+        print("responses",st.session_state["responses"])
         st.subheader("Dynamic Word Cloud")
         text = " ".join(st.session_state["responses"])
+        print("text", text)
         wordcloud = WordCloud(width=800, height=400, background_color="white", include_numbers=True).generate(text)
         fig, ax = plt.subplots()
         ax.imshow(wordcloud, interpolation="bilinear")
@@ -38,6 +41,6 @@ def word_cloud_page():
 
 
 # # Set the background image
-# image_path = os.path.join("images", "paint.jpg")  # Specify the path to your image
-# set_background_image(image_path)
+image_path = os.path.join("images", "cloudhd.jpg")  # Specify the path to your image
+set_background_image(image_path)
 word_cloud_page()

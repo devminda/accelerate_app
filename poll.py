@@ -27,12 +27,47 @@ def poll_page():
     responses = fetch_responses(responses_collection_poll)
     answers_count = {choice: responses.count(choice) for choice in choices}
 
-    fig, ax = plt.subplots()
-    ax.bar(answers_count.keys(), answers_count.values(), color=['red', 'blue', 'green', 'yellow'])
-    ax.set_xlabel("Answers")
-    ax.set_ylabel("Count")
-    ax.set_title("Poll Answer Distribution")
-    st.pyplot(fig)
+    # Display bar chart
+    fig1, ax1 = plt.subplots(figsize=(8, 6))
+    ax1.bar(
+        answers_count.keys(),
+        answers_count.values(),
+        color=['lightcoral', 'lightblue', 'lightgreen', 'lightyellow'],
+        edgecolor='gray',
+        linewidth=1.2
+    )
+    ax1.set_xlabel("Answers", fontsize=14)
+    ax1.set_ylabel("Count", fontsize=14)
+    ax1.set_title("Poll Answer Distribution", fontsize=16, fontweight='bold', color='darkblue')
+    ax1.set_xticks(range(len(answers_count)))
+    ax1.set_xticklabels(answers_count.keys(), rotation=45, ha='right', fontsize=12)
+    # st.pyplot(fig1)
+
+    # Display bubble chart
+    fig2, ax2 = plt.subplots(figsize=(8, 6))
+    x = range(len(answers_count))
+    y = [1] * len(answers_count)
+    bubble_sizes = [v * 200 for v in answers_count.values()]  # Scale bubble size
+
+    ax2.scatter(
+        x, y,
+        s=bubble_sizes,
+        color=['lightcoral', 'lightblue', 'lightgreen', 'lightyellow'],
+        alpha=0.6,
+        edgecolor='black'
+    )
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(answers_count.keys(), rotation=45, fontsize=12)
+    ax2.set_yticks([])
+    ax2.set_title("Bubble Chart: Answer Popularity", fontsize=16, fontweight='bold')
+    # Display the plots side-by-side
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.pyplot(fig1)
+
+    with col2:
+        st.pyplot(fig2)
 
 # Set the background image
 image_path = os.path.join("images", "cloudhd.jpeg")  # Specify the path to your image

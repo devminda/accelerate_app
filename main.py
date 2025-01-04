@@ -28,6 +28,17 @@ def main():
                 "options": ["Earth", "Mars", "Jupiter", "Venus"],
                 "correct_answer": "Mars",
             },
+            "Question 4": {
+                "question": "What is the largest mammal in the world?",
+                "options": ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+                "correct_answer": "Blue Whale",
+            },
+            "Question 5": {
+                "question": "Which element has the chemical symbol 'O'?",
+                "options": ["Oxygen", "Gold", "Silver", "Hydrogen"],
+                "correct_answer": "Oxygen"
+            },
+        
         }
 
     # Set up pages

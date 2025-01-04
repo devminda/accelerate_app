@@ -1,5 +1,6 @@
+import os
 import streamlit as st
-from functions import fetch_quiz_data
+from functions import set_background_image
 from firebase_functions import quiz_doc
 
 
@@ -34,5 +35,9 @@ def quiz_page():
                 st.error(
                     f"{i}: Wrong! The correct answer is {quiz['correct_answer']}."
                 )
+
+# Set the background image
+image_path = os.path.join("images", "cloudhd.jpeg")  # Specify the path to your image
+set_background_image(image_path)
 
 quiz_page()

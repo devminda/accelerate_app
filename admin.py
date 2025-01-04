@@ -37,7 +37,7 @@ def admin_page():
         # Select a question to edit
         question_index = st.selectbox(
             "Select Question to Edit",
-            range(3),
+            range(5),
             format_func=lambda i: f"Question {i + 1}",
         )
 
