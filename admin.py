@@ -1,7 +1,6 @@
-import os
 import streamlit as st
 
-from functions import set_background_image, reset_responses
+from functions import reset_responses
 from firebase_functions import question_doc, quiz_doc, poll_doc, responses_collection_cloud, responses_collection_poll
 
 
@@ -68,7 +67,15 @@ def admin_page():
     
 
 # Set the background image
-image_path = os.path.join("images", "image.jpg")  # Specify the path to your image
-set_background_image(image_path)
-# Run the admin page
+
+col1,col2,col3 = st.columns(3, gap='small', vertical_alignment='center')
+with col1:
+    st.image("./images/learnlablogo-removebg-preview.png", width = 350)
+with col2:
+    st.image("./images/hub logo.png", width = 250)
+with col3:
+    st.image("./images/logo.png", width = 150)
+    
+
+
 admin_page()
