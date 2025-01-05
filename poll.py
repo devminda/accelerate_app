@@ -3,12 +3,13 @@ import os
 import streamlit as st
 import matplotlib.pyplot as plt
 
-from functions import set_background_image, fetch_responses, fetch_quiz_data
+from functions import fetch_responses, fetch_quiz_data
 from firebase_functions import responses_collection_poll, poll_doc
 
 
 def poll_page():
-    st.title("Polling station")   
+    
+    st.title("Polling Station")   
     
     st.session_state["poll_question"], st.session_state["poll_answers"] = fetch_quiz_data(poll_doc)
 
@@ -68,9 +69,5 @@ def poll_page():
 
     with col2:
         st.pyplot(fig2)
-
-# Set the background image
-image_path = os.path.join("images", "cloudhd.jpeg")  # Specify the path to your image
-set_background_image(image_path)
 
 poll_page()

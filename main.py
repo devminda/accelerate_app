@@ -1,6 +1,7 @@
 import streamlit as st
 
 def main():
+    
     # Initialize session state
     if "responses" not in st.session_state:
         st.session_state["responses"] = []
@@ -49,7 +50,12 @@ def main():
     admin_page = st.Page("admin.py", title="Admin", icon=":material/settings:")
 
     pg = st.navigation([main_page, poll_page, quiz_page, cloud_page, admin_page])
-    st.set_page_config(page_title="Accelerate SL teach", page_icon=":material/cast_for_education:")
+    # st.set_page_config(page_title="Accelerate SL teach", page_icon=":material/cast_for_education:")
+    
+    st.sidebar.image("./images/learnlablogo-removebg-preview.png",width=100, use_container_width=True)
+    st.sidebar.image("./images/logo.png",width=100, use_container_width=True)
+    
+    
     pg.run()
 
 main()

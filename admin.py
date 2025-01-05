@@ -42,7 +42,7 @@ def admin_page():
         )
 
         # Edit selected question
-        print( "we are here",st.session_state["quiz_data"])
+        
         selected_question = st.session_state["quiz_data"][f"Question {question_index + 1}"]
         new_question = st.text_input("Edit Question", selected_question["question"])
         option_1 = st.text_input("Option 1", selected_question["options"][0])
