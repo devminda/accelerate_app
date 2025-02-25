@@ -43,23 +43,52 @@ def admin_page():
         # Edit selected question
         
         selected_question = st.session_state["quiz_data"][f"Question {question_index + 1}"]
-        new_question = st.text_input("Edit Question", selected_question["question"])
+
+        # Check if the question is a code snippet
+        is_code = st.checkbox("Is this a code question?", value=selected_question.get("is_code", False))
+
+        # Allow user to input question
+        new_question = st.text_area("Edit Question", selected_question["question"])
+
+        # Show language selection only if it's a code snippet
+        language = None
+        if is_code:
+            language = st.selectbox(
+                "Select Programming Language",
+                ["Python", "JavaScript", "Java", "C++", "Other"],
+                index=0 if "language" not in selected_question else 
+                ["Python", "JavaScript", "Java", "C++", "Other"].index(selected_question["language"])
+            )
+
+        # Options for multiple choice
         option_1 = st.text_input("Option 1", selected_question["options"][0])
         option_2 = st.text_input("Option 2", selected_question["options"][1])
         option_3 = st.text_input("Option 3", selected_question["options"][2])
         option_4 = st.text_input("Option 4", selected_question["options"][3])
+
+        # Correct answer selection
         correct_answer = st.selectbox(
             "Select Correct Answer", [option_1, option_2, option_3, option_4]
         )
 
         if st.button("Update Question"):
             # Update the question data
-            quiz_doc.set({f"Question {question_index + 1}":{'question':new_question,'options':[option_1, option_2, option_3, option_4],'correct_answer':correct_answer}}, merge=True)
-            # reset_responses(quiz_doc)
-            selected_question["question"] = new_question
-            selected_question["options"] = [option_1, option_2, option_3, option_4]
-            selected_question["correct_answer"] = correct_answer
+            question_data = {
+                "question": new_question,
+                "options": [option_1, option_2, option_3, option_4],
+                "correct_answer": correct_answer,
+                "is_code": is_code,
+            }
             
+            # Add language if it's a code question
+            if is_code:
+                question_data["language"] = language
+
+            # Save to database (Firestore or another storage system)
+            quiz_doc.set({f"Question {question_index + 1}": question_data}, merge=True)
+
+            # Update session state
+            selected_question.update(question_data)
 
             st.success("Question updated successfully!")
     else:
